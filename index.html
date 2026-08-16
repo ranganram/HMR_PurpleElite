@@ -914,8 +914,8 @@ function importBackup(evt){
 // This is the SAME project you created for LawShare — this tool uses
 // its own separate tables (hmr_admins, hmr_state), so it doesn't
 // touch anything from that app.
-const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+const SUPABASE_URL = 'https://ghyyuiydtplucpoajinr.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdoeXl1aXlkdHBsdWNwb2FqaW5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4NTUwMjYsImV4cCI6MjEwMjQzMTAyNn0.ah5wbG81NpQjd_fSTSlkgm41PjRjSOg4lKIVTN8PzXk';
 
 // The login screen only asks for a password. Behind the scenes it
 // signs in to one fixed Supabase account using this email — you
@@ -994,7 +994,14 @@ async function handleSignIn(){
   btn.disabled = true; btn.textContent = 'Unlocking…';
   const { data, error } = await sb.auth.signInWithPassword({ email: HMR_ADMIN_EMAIL, password });
   btn.disabled = false; btn.textContent = 'Unlock';
-  if(error){ document.getElementById('authError').textContent = 'Wrong password.'; return; }
+  if(error){
+    console.error('Sign-in error:', error);
+    document.getElementById('authError').textContent =
+      error.message === 'Invalid login credentials'
+        ? 'Wrong password.'
+        : 'Could not sign in: ' + error.message + ' (check the browser console for details)';
+    return;
+  }
   document.getElementById('authPassword').value = '';
   await onSignedIn(data.user);
 }
