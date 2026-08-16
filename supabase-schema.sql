@@ -4,9 +4,10 @@
 -- hmr_admins and hmr_state — completely separate from the LawShare
 -- tables (profiles/files/file_shares), so this can't affect that app.
 --
--- Before running: replace the placeholder email below with the exact
--- email of the shared login account you'll create for this tool (see
--- the "Create the login" step in the instructions).
+-- The app's login screen only asks for a password (see index.html).
+-- Behind the scenes it signs in as one fixed account. This row must
+-- match the HMR_ADMIN_EMAIL constant near the bottom of index.html —
+-- don't change one without the other.
 
 -- One row per email allowed to read/write the HMR data. Empty by
 -- default — RLS below denies everyone until their email is listed here.
@@ -18,8 +19,7 @@ alter table public.hmr_admins enable row level security;
 -- No policies on hmr_admins itself: it's only ever read by the
 -- security-definer function below, never queried directly by the app.
 
--- >>> Replace this with your real shared-login email before running <<<
-insert into public.hmr_admins (email) values ('treasurer@example.com')
+insert into public.hmr_admins (email) values ('admin@hmrpurpleelites.internal')
 on conflict (email) do nothing;
 
 -- The whole app's state (flats, transactions, settings, reconciliation)

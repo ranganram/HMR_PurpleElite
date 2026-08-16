@@ -91,11 +91,10 @@
 <div id="authGate">
   <div class="card">
     <h1>HMR Purple Elites</h1>
-    <p class="muted">Owners Welfare Association Accounts — sign in to continue.</p>
+    <p class="muted">Owners Welfare Association Accounts — enter the password to edit.</p>
     <div id="authError"></div>
-    <label>Email<input type="email" id="authEmail" autocomplete="username"></label>
-    <label>Password<input type="password" id="authPassword" autocomplete="current-password"></label>
-    <button class="btn" id="authSubmitBtn" onclick="handleSignIn()">Sign in</button>
+    <label>Password<input type="password" id="authPassword" autocomplete="current-password" onkeydown="if(event.key==='Enter') handleSignIn()"></label>
+    <button class="btn" id="authSubmitBtn" onclick="handleSignIn()">Unlock</button>
   </div>
 </div>
 
@@ -109,8 +108,7 @@
     </div>
     <div class="row" style="gap:12px;">
       <span class="cloud-status" id="cloudStatus"></span>
-      <span class="muted" id="userEmailLabel"></span>
-      <button class="btn ghost small" onclick="handleSignOut()">Sign out</button>
+      <button class="btn ghost small" onclick="handleSignOut()">Lock</button>
     </div>
   </div>
 </header>
@@ -916,8 +914,16 @@ function importBackup(evt){
 // This is the SAME project you created for LawShare — this tool uses
 // its own separate tables (hmr_admins, hmr_state), so it doesn't
 // touch anything from that app.
-const SUPABASE_URL = 'https://ghyyuiydtplucpoajinr.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdoeXl1aXlkdHBsdWNwb2FqaW5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4NTUwMjYsImV4cCI6MjEwMjQzMTAyNn0.ah5wbG81NpQjd_fSTSlkgm41PjRjSOg4lKIVTN8PzXk';
+const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+
+// The login screen only asks for a password. Behind the scenes it
+// signs in to one fixed Supabase account using this email — you
+// create that account once in Supabase (Authentication -> Users)
+// with this exact email and whatever password you want to share.
+// This email must also match the row inserted into hmr_admins in
+// supabase-schema.sql.
+const HMR_ADMIN_EMAIL = 'admin@hmrpurpleelites.internal';
 
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -982,14 +988,14 @@ function showAppShell(){
 }
 
 async function handleSignIn(){
-  const email = document.getElementById('authEmail').value.trim();
   const password = document.getElementById('authPassword').value;
   document.getElementById('authError').textContent = '';
   const btn = document.getElementById('authSubmitBtn');
-  btn.disabled = true; btn.textContent = 'Signing in…';
-  const { data, error } = await sb.auth.signInWithPassword({ email, password });
-  btn.disabled = false; btn.textContent = 'Sign in';
-  if(error){ document.getElementById('authError').textContent = error.message; return; }
+  btn.disabled = true; btn.textContent = 'Unlocking…';
+  const { data, error } = await sb.auth.signInWithPassword({ email: HMR_ADMIN_EMAIL, password });
+  btn.disabled = false; btn.textContent = 'Unlock';
+  if(error){ document.getElementById('authError').textContent = 'Wrong password.'; return; }
+  document.getElementById('authPassword').value = '';
   await onSignedIn(data.user);
 }
 
@@ -1001,7 +1007,6 @@ async function handleSignOut(){
 
 async function onSignedIn(user){
   currentUser = user;
-  document.getElementById('userEmailLabel').textContent = user.email;
   showAppShell();
   const hadCloudData = await loadFromCloud();
   if(!hadCloudData){
