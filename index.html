@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HMR Purple Elites — Owners Welfare Association Accounts</title>
+<style>
+  :root{
+    --ink:#18181b; --gray:#6b7280; --gray-light:#9ca3af; --border:#e5e7eb; --bg:#fafafa;
+    --accent:#3730a3;
+    --green:#166534; --red:#991b1b;
+  }
+  *{box-sizing:border-box;}
+  body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:var(--bg);color:var(--ink);font-size:14px;}
+  header{background:#fff;border-bottom:1px solid var(--border);padding:16px 24px;}
+  header h1{margin:0;font-size:16px;font-weight:600;letter-spacing:.01em;}
+  header .sub{color:var(--gray);font-size:12.5px;margin-top:3px;}
+  .banner{background:#fff;color:var(--gray);padding:8px 24px;font-size:12.5px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--border);}
+  .banner button{margin-left:6px;}
+  nav{background:#fff;border-bottom:1px solid var(--border);padding:0 16px;display:flex;flex-wrap:wrap;position:sticky;top:0;z-index:20;}
+  nav button{background:none;border:none;padding:11px 14px;font-size:13px;cursor:pointer;color:var(--gray);border-bottom:2px solid transparent;font-weight:500;}
+  nav button.active{color:var(--ink);border-bottom-color:var(--accent);font-weight:600;}
+  nav button:hover{color:var(--ink);}
+  main{padding:20px 24px 60px;max-width:1300px;margin:0 auto;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:20px;}
+  .card{background:#fff;padding:14px 16px;}
+  .card .label{font-size:11px;color:var(--gray);font-weight:500;}
+  .card .value{font-size:19px;font-weight:600;margin-top:4px;}
+  .card.green .value{color:var(--green);} .card.red .value{color:var(--red);} .card.purple .value{color:var(--ink);}
+  h2{font-size:14.5px;font-weight:600;margin:26px 0 10px;color:var(--ink);}
+  h3{font-size:13.5px;font-weight:600;margin:18px 0 8px;color:var(--ink);}
+  .panel{background:#fff;border:1px solid var(--border);padding:16px;margin-bottom:16px;}
+  table{border-collapse:collapse;width:100%;font-size:12.5px;}
+  th,td{border:1px solid var(--border);padding:6px 8px;text-align:left;white-space:nowrap;}
+  th{background:#eef1fb;font-weight:600;color:#3730a3;border-bottom:2px solid #c7d2fe;}
+  tr:hover td{background:#fafafa;}
+  .table-wrap{overflow-x:auto;}
+  table.pivot th:first-child, table.pivot td:first-child{position:sticky;left:0;background:#fff;z-index:2;min-width:64px;}
+  table.pivot th:nth-child(2), table.pivot td:nth-child(2){position:sticky;left:64px;background:#fff;z-index:2;min-width:130px;border-right:2px solid var(--border);}
+  table.pivot th:first-child, table.pivot th:nth-child(2){background:#eef1fb;z-index:3;}
+  table.pivot tr:hover td:first-child, table.pivot tr:hover td:nth-child(2){background:#fafafa;}
+  .tag{font-size:11px;font-weight:600;}
+  .tag.paid{color:var(--green);}
+  .tag.unpaid{color:var(--red);}
+  .tag.partial{color:#92400e;}
+  .tag.credit{color:var(--green);}
+  .tag.debit{color:var(--red);}
+  button{font-family:inherit;cursor:pointer;}
+  .btn{background:var(--ink);color:#fff;border:1px solid var(--ink);padding:7px 13px;font-size:12.5px;font-weight:500;}
+  .btn:hover{background:#000;}
+  .btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--border);}
+  .btn.danger{background:#fff;color:var(--red);border:1px solid var(--border);}
+  .btn.small{padding:4px 9px;font-size:11.5px;}
+  .btn.ghost{background:transparent;color:var(--gray);border:1px solid var(--border);}
+  select,input,textarea{padding:6px 8px;border:1px solid var(--border);font-size:12.5px;font-family:inherit;background:#fff;color:var(--ink);}
+  .form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-top:8px;}
+  .form-grid label{display:flex;flex-direction:column;font-size:11px;color:var(--gray);font-weight:500;gap:4px;}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px;}
+  .muted{color:var(--gray);font-size:12px;}
+  .hint{background:#fafafa;color:var(--gray);border:1px solid var(--border);padding:8px 12px;font-size:12px;margin:8px 0;}
+  .bar-row{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:12px;}
+  .bar-label{width:150px;flex-shrink:0;}
+  .bar-track{flex:1;background:#f1f1f1;height:10px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--ink);}
+  .bar-val{width:110px;text-align:right;flex-shrink:0;font-weight:600;}
+  .delta-up{color:var(--red);font-weight:600;}
+  .delta-down{color:var(--green);font-weight:600;}
+  .delta-flat{color:var(--gray);}
+  .hidden{display:none !important;}
+  .close-x{float:right;background:none;border:none;font-size:16px;color:var(--gray);cursor:pointer;}
+  footer{text-align:center;color:var(--gray-light);font-size:11px;padding:20px;}
+  #authGate{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);}
+  #authGate .card{background:#fff;border:1px solid var(--border);padding:28px;width:100%;max-width:320px;}
+  #authGate h1{font-size:15px;margin:0 0 4px;}
+  #authGate p.muted{margin:0 0 18px;}
+  #authGate label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--gray);font-weight:500;margin-bottom:12px;}
+  #authGate input{width:100%;}
+  #authGate .btn{width:100%;padding:9px;font-size:13px;}
+  #authError{color:var(--red);font-size:12px;min-height:16px;margin-bottom:8px;}
+  .cloud-status{font-size:11.5px;font-weight:600;}
+  .cloud-status.saving{color:var(--gray);}
+  .cloud-status.ok{color:var(--green);}
+  .cloud-status.error{color:var(--red);}
+  @media print{ nav,.banner,.no-print{display:none;} }
+</style>
+<meta property="og:title" content="HMR Purple Elites — Owners Welfare Association Accounts" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<div id="authGate">
+  <div class="card">
+    <h1>HMR Purple Elites</h1>
+    <p class="muted">Owners Welfare Association Accounts — sign in to continue.</p>
+    <div id="authError"></div>
+    <label>Email<input type="email" id="authEmail" autocomplete="username"></label>
+    <label>Password<input type="password" id="authPassword" autocomplete="current-password"></label>
+    <button class="btn" id="authSubmitBtn" onclick="handleSignIn()">Sign in</button>
+  </div>
+</div>
+
+<div id="appShell" class="hidden">
+
+<header>
+  <div class="row" style="justify-content:space-between;align-items:flex-start;">
+    <div>
+      <h1>HMR PURPLE ELITES APARTMENTS OWNERS WELFARE ASSOCIATION</h1>
+      <div class="sub" id="acctSubline">Canara Bank A/C 3043101011473 · Bangalore Hennur Road · IFSC CNRB0003043</div>
+    </div>
+    <div class="row" style="gap:12px;">
+      <span class="cloud-status" id="cloudStatus"></span>
+      <span class="muted" id="userEmailLabel"></span>
+      <button class="btn ghost small" onclick="handleSignOut()">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<div class="banner">
+  <span>Changes save to the cloud automatically. Keep exporting a local backup now and then as extra insurance.</span>
+  <span>
+    <button class="btn small" onclick="document.getElementById('importFile').click()">Import Backup</button>
+    <button class="btn secondary small" onclick="exportBackup()">Export Backup</button>
+    <input type="file" id="importFile" accept=".json" class="hidden" onchange="importBackup(event)">
+  </span>
+</div>
+
+<nav id="tabNav"></nav>
+<main id="tabContent"></main>
+<footer>HMR Purple Elites — internal accounts tool. Data syncs to the cloud automatically while you're signed in.</footer>
+
+</div><!-- #appShell -->
+
+<script>
+/* ============================= CONSTANTS ============================= */
+const CREDIT_CATS = ['Maintenance Fee','Water Tanker','Sinking Fund','Advance Payment','Other Income'];
+const OTHER_INCOME_SUBCATS = ['ACT - Internet Usage Charge','Advertising Board (Digital)','Bank Interest','Other Indirect Income'];
+const DEBIT_CATS = ['Security & Cleaning','Electricity (BESCOM)','Water (BWSSB)','Lift Maintenance','Mosquito Spraying','Repairs & Maintenance','Administrative','Capital Items','Other Expense'];
+const MODES = ['UPI','Bank Transfer','NEFT','IMPS','RTGS','Cash','Cheque'];
+const OCCUPANCY = ['Owner-Occupied','Rented','Vacant','Unknown'];
+const TABS = [
+  ['dashboard','Dashboard'],['monthly','Monthly View'],['flats','Flats & Owners'],
+  ['transactions','Transactions'],['dues','Dues / Non-Payers'],['sinking','Sinking Fund'],
+  ['income','Income'],['expenses','Expenses'],['capital','Capital Items'],['settings','Settings']
+];
+
+/* ============================= STATE ============================= */
+let DB = { flats: [], transactions: [], settings: {}, reconciliation: {} };
+let flatSeq = 1, txnSeq = 1;
+let currentTab = 'dashboard';
+let selectedMonth = null;
+let editingTxnId = null, editingFlatId = null;
+let monthlyViewMetric = 'total';
+
+/* ============================= HELPERS ============================= */
+function uid(prefix, n){ return prefix + n; }
+function toINR(n){
+  n = Number(n)||0;
+  const neg = n < 0; n = Math.abs(n);
+  const parts = n.toFixed(2).split('.');
+  let intPart = parts[0];
+  let last3 = intPart.slice(-3);
+  let rest = intPart.slice(0,-3);
+  if(rest !== '') rest = rest.replace(/\B(?=(\d{2})+(?!\d))/g,',') + ',';
+  return (neg?'-':'') + '₹' + rest + last3 + '.' + parts[1];
+}
+function isoToDisplay(iso){ if(!iso) return ''; const [y,m,d]=iso.split('-'); return `${d}-${m}-${y}`; }
+function monthKey(iso){ return iso ? iso.slice(0,7) : ''; }
+function monthLabel(key){ if(!key) return ''; const [y,m]=key.split('-'); const names=['January','February','March','April','May','June','July','August','September','October','November','December']; return names[parseInt(m,10)-1]+' '+y; }
+function allMonths(){
+  const set = new Set(DB.transactions.map(t=>monthKey(t.date)));
+  set.add(monthKey(DB.settings.openingDate));
+  const arr = [...set].filter(Boolean).sort();
+  return arr;
+}
+function esc(s){ return (s===undefined||s===null)?'':String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function flatByNo(no){ return DB.flats.find(f=>f.flatNo===no); }
+function sortedFlats(){ return [...DB.flats].sort((a,b)=>a.flatNo.localeCompare(b.flatNo)); }
+
+/* ============================= INIT / SAMPLE DATA ============================= */
+function generateFlats(floorStart, floorEnd, unitsPerFloor){
+  let added = 0;
+  for(let f=floorStart; f<=floorEnd; f++){
+    for(let u=1; u<=unitsPerFloor; u++){
+      const no = f===0 ? String(u).padStart(3,'0') : String(f*100+u).padStart(3,'0');
+      if(!flatByNo(no)){
+        DB.flats.push({id:uid('F',flatSeq++), flatNo:no, ownerName:'', ownerContact:'', occupancy:'Unknown', tenantName:'', tenantContact:'', notes:''});
+        added++;
+      }
+    }
+  }
+  return added;
+}
+
+function loadInitialData(){
+  generateFlats(0,3,8); // 001-008, 101-108, 201-208, 301-308
+
+  const owners = {'004':'GURAV','103':'USHA MP','207':'NALINI NAGARAJ','302':'NANCY','305':'WILSON','307':'VARSHA BHAT'};
+  Object.entries(owners).forEach(([no,name])=>{ const f=flatByNo(no); if(f){ f.ownerName=name; f.occupancy='Owner-Occupied'; } });
+
+  DB.settings = {
+    assocName: 'HMR Purple Elites Apartments Owners Welfare Association',
+    bankAccount: '3043101011473', bankName:'Canara Bank', branch:'Bangalore Hennur Road', ifsc:'CNRB0003043',
+    openingBalance: 117892.75, openingDate: '2026-04-01',
+    standardMaintenanceFee: 2500, standardWaterTankerFee: 0
+  };
+
+  const credits = [
+    ['2026-04-01','718230046243','BRITTO ALEXIS','','Maintenance Fee','','UPI',2500,'Flat number not specified in source ledger — please assign'],
+    ['2026-04-01','010126364743','NANCY','302','Maintenance Fee','','UPI',2500,''],
+    ['2026-04-01','010126364743','VARSHA BHAT','307','Maintenance Fee','','UPI',2500,''],
+    ['2026-04-01','609109795235','','','Maintenance Fee','','Bank Transfer',11400,'Payer and flat not specified in source ledger — please reconcile'],
+    ['2026-04-01','645731255604','USHA MP','103','Maintenance Fee','','UPI',2500,''],
+    ['2026-04-01','','GURAV','004','Maintenance Fee','','NEFT',2500,''],
+    ['2026-04-01','609151384998','WILSON','305','Maintenance Fee','','IMPS',2500,''],
+    ['2026-04-01','609120082069','NALINI NAGARAJ','207','Maintenance Fee','','UPI',2500,''],
+    ['2026-04-01','609126057272','NIHALAHMED','','Maintenance Fee','','Bank Transfer',2500,'Flat number not specified in source ledger — please assign'],
+  ];
+  credits.forEach(([date,cheque,payer,flat,cat,sub,mode,amt,rem])=>{
+    DB.transactions.push({id:uid('T',txnSeq++), date, valueDate:date, chequeNo:cheque, type:'credit', category:cat, subCategory:sub, flatNo:flat, payerPayee:payer, mode, amount:amt, verified:true, remarks:rem, isAggregate:false});
+  });
+
+  const debits = [
+    ['2026-04-30','Security & Cleaning',97750,'4 transactions aggregated from source monthly summary — edit to itemize individual payments'],
+    ['2026-04-30','Electricity (BESCOM)',37954,'3 transactions aggregated from source monthly summary — edit to itemize individual payments'],
+    ['2026-04-30','Water (BWSSB)',50560,'3 transactions aggregated from source monthly summary — edit to itemize individual payments'],
+  ];
+  debits.forEach(([date,cat,amt,rem])=>{
+    DB.transactions.push({id:uid('T',txnSeq++), date, valueDate:date, chequeNo:'', type:'debit', category:cat, subCategory:'', flatNo:'', payerPayee:'', mode:'Bank Transfer', amount:amt, verified:true, remarks:rem, isAggregate:true});
+  });
+
+  selectedMonth = '2026-04';
+}
+
+/* ============================= CALC HELPERS ============================= */
+function txnsForMonth(mk){ return DB.transactions.filter(t=>monthKey(t.date)===mk); }
+function sumBy(arr,pred){ return arr.filter(pred).reduce((s,t)=>s+Number(t.amount||0),0); }
+function computeBalanceUpTo(dateIso){
+  const ob = Number(DB.settings.openingBalance||0);
+  const relevant = DB.transactions.filter(t=>t.date<=dateIso);
+  const credit = sumBy(relevant, t=>t.type==='credit');
+  const debit = sumBy(relevant, t=>t.type==='debit');
+  return ob + credit - debit;
+}
+function currentBalance(){
+  const ob = Number(DB.settings.openingBalance||0);
+  const credit = sumBy(DB.transactions, t=>t.type==='credit');
+  const debit = sumBy(DB.transactions, t=>t.type==='debit');
+  return ob + credit - debit;
+}
+function ownersCount(){ return DB.flats.filter(f=>f.ownerName && f.ownerName.trim()).length; }
+function tenantsCount(){ return DB.flats.filter(f=>f.occupancy==='Rented' && f.tenantName && f.tenantName.trim()).length; }
+function vacantCount(){ return DB.flats.filter(f=>f.occupancy==='Vacant').length; }
+
+/* ============================= RENDER SHELL ============================= */
+function render(){
+  document.getElementById('acctSubline').textContent =
+    `${DB.settings.bankName||''} A/C ${DB.settings.bankAccount||''} · ${DB.settings.branch||''} · IFSC ${DB.settings.ifsc||''}`;
+  const nav = document.getElementById('tabNav');
+  nav.innerHTML = TABS.map(([id,label])=>`<button class="${id===currentTab?'active':''}" onclick="switchTab('${id}')">${label}</button>`).join('');
+  const fns = {dashboard:renderDashboard, monthly:renderMonthly, flats:renderFlats, transactions:renderTransactions,
+    dues:renderDues, sinking:renderSinking, income:renderIncome, expenses:renderExpenses, capital:renderCapital, settings:renderSettings};
+  document.getElementById('tabContent').innerHTML = fns[currentTab]();
+  queueCloudSync();
+}
+function switchTab(id){ currentTab=id; editingTxnId=null; editingFlatId=null; render(); }
+
+function monthSelectorHtml(){
+  const months = allMonths();
+  return `<div class="row"><label class="muted">Month:&nbsp;
+    <select onchange="selectedMonth=this.value; render();">
+      ${months.map(m=>`<option value="${m}" ${m===selectedMonth?'selected':''}>${monthLabel(m)}</option>`).join('')}
+    </select></label></div>`;
+}
+
+/* ============================= DASHBOARD ============================= */
+function renderDashboard(){
+  if(!selectedMonth) selectedMonth = allMonths().slice(-1)[0] || monthKey(DB.settings.openingDate);
+  const mTx = txnsForMonth(selectedMonth);
+  const mCredit = sumBy(mTx, t=>t.type==='credit');
+  const mDebit = sumBy(mTx, t=>t.type==='debit');
+  const maintCollected = sumBy(mTx, t=>t.type==='credit' && t.category==='Maintenance Fee');
+  const tankerCollected = sumBy(mTx, t=>t.type==='credit' && t.category==='Water Tanker');
+  const sinkingCollected = sumBy(DB.transactions, t=>t.type==='credit' && t.category==='Sinking Fund');
+  const otherIncome = sumBy(mTx, t=>t.type==='credit' && t.category==='Other Income');
+  const totalReceivedAllTime = sumBy(DB.transactions, t=>t.type==='credit');
+  const totalSpentAllTime = sumBy(DB.transactions, t=>t.type==='debit');
+  const recon = DB.reconciliation[selectedMonth] || {};
+
+  return `
+  <div class="row" style="justify-content:space-between;">
+    <div class="row">${monthSelectorHtml()}</div>
+  </div>
+  <div class="cards">
+    <div class="card purple"><div class="label">Total Flats</div><div class="value">${DB.flats.length}</div></div>
+    <div class="card purple"><div class="label">No. of Owners</div><div class="value">${ownersCount()}</div></div>
+    <div class="card purple"><div class="label">No. of Tenants</div><div class="value">${tenantsCount()}</div></div>
+    <div class="card"><div class="label">Vacant Flats</div><div class="value">${vacantCount()}</div></div>
+    <div class="card"><div class="label">Opening Balance (Overall)</div><div class="value">${toINR(DB.settings.openingBalance)}</div></div>
+    <div class="card purple"><div class="label">Current Balance (Computed)</div><div class="value">${toINR(currentBalance())}</div></div>
+    <div class="card green"><div class="label">${monthLabel(selectedMonth)} — Received</div><div class="value">${toINR(mCredit)}</div></div>
+    <div class="card red"><div class="label">${monthLabel(selectedMonth)} — Spent</div><div class="value">${toINR(mDebit)}</div></div>
+    <div class="card"><div class="label">Maintenance Collected (month)</div><div class="value">${toINR(maintCollected)}</div></div>
+    <div class="card"><div class="label">Water Tanker Collected (month)</div><div class="value">${toINR(tankerCollected)}</div></div>
+    <div class="card"><div class="label">Other Indirect Income (month)</div><div class="value">${toINR(otherIncome)}</div></div>
+    <div class="card"><div class="label">Sinking Fund (all-time total)</div><div class="value">${toINR(sinkingCollected)}</div></div>
+    <div class="card green"><div class="label">Total Received (all-time)</div><div class="value">${toINR(totalReceivedAllTime)}</div></div>
+    <div class="card red"><div class="label">Total Spent (all-time)</div><div class="value">${toINR(totalSpentAllTime)}</div></div>
+  </div>
+
+  <div class="panel">
+    <h3>Bank Reconciliation — ${monthLabel(selectedMonth)}</h3>
+    <p class="muted">Enter the closing balance shown on your actual bank statement for this month to check it against what's recorded here. Useful while you're still adding older/missing transactions.</p>
+    <div class="row">
+      <label class="muted">Bank statement closing balance:&nbsp;
+        <input type="number" step="0.01" style="width:150px" id="reconInput" value="${recon.statedClosing ?? ''}">
+      </label>
+      <button class="btn small" onclick="saveRecon()">Save</button>
+      ${recon.statedClosing!==undefined ? `<span class="muted">Computed balance as of month-end: <b>${toINR(computeBalanceUpTo(selectedMonth+'-31'))}</b> · Variance: <b>${toINR(computeBalanceUpTo(selectedMonth+'-31')-recon.statedClosing)}</b></span>`:''}
+    </div>
+  </div>
+  `;
+}
+function saveRecon(){
+  const v = parseFloat(document.getElementById('reconInput').value);
+  if(isNaN(v)){ alert('Enter a valid number'); return; }
+  DB.reconciliation[selectedMonth] = { statedClosing: v };
+  render();
+}
+
+/* ============================= MONTHLY VIEW (per-flat, all months, horizontal scroll) ============================= */
+function renderMonthly(){
+  const months = allMonths();
+  const fee = Number(DB.settings.standardMaintenanceFee||0);
+  const metric = monthlyViewMetric;
+  const metricLabel = metric==='total' ? 'Total Paid (all categories)' : metric;
+
+  const cellVal = (flatNo, m) => {
+    const mTx = txnsForMonth(m).filter(t=>t.flatNo===flatNo && t.type==='credit');
+    if(metric==='total') return sumBy(mTx, ()=>true);
+    return sumBy(mTx, t=>t.category===metric);
+  };
+
+  const rows = sortedFlats().map(f=>{
+    let rowTotal = 0;
+    const cells = months.map(m=>{
+      const v = cellVal(f.flatNo, m);
+      rowTotal += v;
+      let style = 'text-align:right;';
+      if(metric==='Maintenance Fee' || metric==='total'){
+        if(fee>0 && v>0 && v<fee) style += `color:${'#92400e'};`;
+        else if(fee>0 && v<=0) style += `color:var(--red);`;
+      }
+      return `<td style="${style}">${v?toINR(v):'<span class="muted">—</span>'}</td>`;
+    }).join('');
+    return `<tr><td>${f.flatNo}</td><td>${esc(f.ownerName)||'<span class="muted">—</span>'}</td>${cells}<td style="text-align:right;font-weight:600;">${toINR(rowTotal)}</td></tr>`;
+  }).join('');
+
+  const monthTotals = months.map(m=> sortedFlats().reduce((s,f)=>s+cellVal(f.flatNo,m),0));
+  const grandTotal = monthTotals.reduce((a,b)=>a+b,0);
+
+  return `
+  <div class="row">
+    <label class="muted">Show:&nbsp;
+      <select onchange="monthlyViewMetric=this.value; render();">
+        <option value="total" ${metric==='total'?'selected':''}>Total Paid (all categories)</option>
+        <option value="Maintenance Fee" ${metric==='Maintenance Fee'?'selected':''}>Maintenance Fee only</option>
+        <option value="Water Tanker" ${metric==='Water Tanker'?'selected':''}>Water Tanker only</option>
+        <option value="Sinking Fund" ${metric==='Sinking Fund'?'selected':''}>Sinking Fund only</option>
+      </select>
+    </label>
+  </div>
+  <div class="hint">Scroll the table sideways to see every month for each flat. The Flat and Owner columns stay in place while you scroll. Standard maintenance fee: ${toINR(fee)} / flat / month — cells below it are highlighted.</div>
+  <div class="panel">
+    <h3>Per-Flat Payments — Every Month (${metricLabel})</h3>
+    <div class="table-wrap"><table class="pivot">
+      <tr><th>Flat</th><th>Owner</th>${months.map(m=>`<th style="text-align:right;">${monthLabel(m)}</th>`).join('')}<th style="text-align:right;">Total</th></tr>
+      ${rows}
+      <tr style="font-weight:600;background:#fafafa;"><td>TOTAL</td><td></td>${monthTotals.map(v=>`<td style="text-align:right;">${toINR(v)}</td>`).join('')}<td style="text-align:right;">${toINR(grandTotal)}</td></tr>
+    </table></div>
+  </div>`;
+}
+
+/* ============================= FLATS & OWNERS ============================= */
+function renderFlats(){
+  const rows = sortedFlats().map(f=>`
+    <tr>
+      <td>${f.flatNo}</td><td>${esc(f.ownerName)}</td><td>${esc(f.ownerContact)}</td>
+      <td>${f.occupancy}</td><td>${esc(f.tenantName)}</td><td>${esc(f.tenantContact)}</td>
+      <td>${esc(f.notes)}</td>
+      <td class="no-print">
+        <button class="btn small ghost" onclick="startEditFlat('${f.id}')">Edit</button>
+        <button class="btn small danger" onclick="deleteFlat('${f.id}')">Delete</button>
+      </td>
+    </tr>`).join('');
+
+  const f = editingFlatId ? DB.flats.find(x=>x.id===editingFlatId) : null;
+
+  return `
+  <div class="cards">
+    <div class="card purple"><div class="label">Total Flats</div><div class="value">${DB.flats.length}</div></div>
+    <div class="card purple"><div class="label">Owners</div><div class="value">${ownersCount()}</div></div>
+    <div class="card purple"><div class="label">Tenants</div><div class="value">${tenantsCount()}</div></div>
+    <div class="card"><div class="label">Vacant</div><div class="value">${vacantCount()}</div></div>
+  </div>
+
+  <div class="panel">
+    <h3>Bulk-generate Flats</h3>
+    <p class="muted">e.g. floor 0 → 001-008, floor 1 → 101-108, floor 2 → 201-208. Existing flat numbers are skipped.</p>
+    <div class="row">
+      <label class="muted">From floor <input type="number" id="genFloorStart" value="4" style="width:70px"></label>
+      <label class="muted">To floor <input type="number" id="genFloorEnd" value="4" style="width:70px"></label>
+      <label class="muted">Units per floor <input type="number" id="genUnits" value="8" style="width:70px"></label>
+      <button class="btn small" onclick="doGenerateFlats()">Generate</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>${f?'Edit Flat '+f.flatNo:'Add a Flat'}</h3>
+    <div class="form-grid">
+      <label>Flat No.<input id="flatNo" value="${f?esc(f.flatNo):''}" placeholder="e.g. 402"></label>
+      <label>Owner Name<input id="ownerName" value="${f?esc(f.ownerName):''}"></label>
+      <label>Owner Contact<input id="ownerContact" value="${f?esc(f.ownerContact):''}"></label>
+      <label>Occupancy<select id="occupancy">${OCCUPANCY.map(o=>`<option ${f&&f.occupancy===o?'selected':''}>${o}</option>`).join('')}</select></label>
+      <label>Tenant Name<input id="tenantName" value="${f?esc(f.tenantName):''}"></label>
+      <label>Tenant Contact<input id="tenantContact" value="${f?esc(f.tenantContact):''}"></label>
+      <label>Notes<input id="flatNotes" value="${f?esc(f.notes):''}"></label>
+    </div>
+    <div class="row" style="margin-top:10px;">
+      <button class="btn" onclick="saveFlat()">${f?'Save Changes':'Add Flat'}</button>
+      ${f?`<button class="btn ghost" onclick="editingFlatId=null; render();">Cancel</button>`:''}
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>All Flats (${DB.flats.length})</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Flat</th><th>Owner</th><th>Owner Contact</th><th>Occupancy</th><th>Tenant</th><th>Tenant Contact</th><th>Notes</th><th class="no-print">Actions</th></tr>
+      ${rows || '<tr><td colspan="8" class="muted">No flats yet.</td></tr>'}
+    </table></div>
+  </div>`;
+}
+function doGenerateFlats(){
+  const s = parseInt(document.getElementById('genFloorStart').value,10);
+  const e = parseInt(document.getElementById('genFloorEnd').value,10);
+  const u = parseInt(document.getElementById('genUnits').value,10);
+  if(isNaN(s)||isNaN(e)||isNaN(u)){alert('Enter valid numbers');return;}
+  const added = generateFlats(s,e,u);
+  render();
+  alert(added+' new flat(s) added.');
+}
+function startEditFlat(id){ editingFlatId = id; render(); }
+function saveFlat(){
+  const no = document.getElementById('flatNo').value.trim();
+  if(!no){ alert('Flat number is required'); return; }
+  const data = {
+    flatNo: no,
+    ownerName: document.getElementById('ownerName').value.trim(),
+    ownerContact: document.getElementById('ownerContact').value.trim(),
+    occupancy: document.getElementById('occupancy').value,
+    tenantName: document.getElementById('tenantName').value.trim(),
+    tenantContact: document.getElementById('tenantContact').value.trim(),
+    notes: document.getElementById('flatNotes').value.trim(),
+  };
+  if(editingFlatId){
+    const f = DB.flats.find(x=>x.id===editingFlatId);
+    Object.assign(f,data);
+    editingFlatId=null;
+  } else {
+    if(flatByNo(no)){ alert('Flat '+no+' already exists.'); return; }
+    DB.flats.push({id:uid('F',flatSeq++), ...data});
+  }
+  render();
+}
+function deleteFlat(id){
+  if(!confirm('Delete this flat? Its transactions will remain but lose the flat link.')) return;
+  DB.flats = DB.flats.filter(f=>f.id!==id);
+  render();
+}
+
+/* ============================= TRANSACTIONS ============================= */
+function renderTransactions(){
+  const t = editingTxnId ? DB.transactions.find(x=>x.id===editingTxnId) : null;
+  const typeVal = t ? t.type : 'credit';
+  const catOptions = (typeVal==='credit'?CREDIT_CATS:DEBIT_CATS).map(c=>`<option ${t&&t.category===c?'selected':''}>${c}</option>`).join('');
+
+  const sorted = [...DB.transactions].sort((a,b)=> a.date<b.date?1:a.date>b.date?-1: b.id.localeCompare(a.id));
+  const rows = sorted.map(tx=>`
+    <tr>
+      <td>${isoToDisplay(tx.date)}</td>
+      <td>${esc(tx.chequeNo)}</td>
+      <td><span class="tag ${tx.type}">${tx.type}</span></td>
+      <td>${esc(tx.category)}${tx.subCategory?' / '+esc(tx.subCategory):''}</td>
+      <td>${esc(tx.flatNo)}</td>
+      <td>${esc(tx.payerPayee)}</td>
+      <td>${tx.mode}</td>
+      <td style="text-align:right;">${tx.type==='debit'?toINR(tx.amount):''}</td>
+      <td style="text-align:right;">${tx.type==='credit'?toINR(tx.amount):''}</td>
+      <td>${tx.verified?'Yes':'—'}</td>
+      <td>${esc(tx.remarks)}${tx.isAggregate?' <span class="tag partial">(aggregated)</span>':''}</td>
+      <td class="no-print">
+        <button class="btn small ghost" onclick="startEditTxn('${tx.id}')">Edit</button>
+        <button class="btn small danger" onclick="deleteTxn('${tx.id}')">Delete</button>
+      </td>
+    </tr>`).join('');
+
+  return `
+  <div class="panel">
+    <h3>${t?'Edit Transaction':'Add Transaction'}</h3>
+    <div class="row">
+      <label class="muted"><input type="radio" name="txnType" value="credit" ${typeVal==='credit'?'checked':''} onchange="refreshCatOptions()"> Credit (Income)</label>
+      <label class="muted"><input type="radio" name="txnType" value="debit" ${typeVal==='debit'?'checked':''} onchange="refreshCatOptions()"> Debit (Expense)</label>
+    </div>
+    <div class="form-grid">
+      <label>Date<input type="date" id="txnDate" value="${t?t.date:''}"></label>
+      <label>Cheque / Ref No.<input id="txnCheque" value="${t?esc(t.chequeNo):''}"></label>
+      <label>Category<select id="txnCategory" onchange="refreshSubcatVisibility()">${catOptions}</select></label>
+      <label id="subcatWrap" class="${(t&&t.category==='Other Income')?'':'hidden'}">Sub-Category<select id="txnSubcat">${OTHER_INCOME_SUBCATS.map(s=>`<option ${t&&t.subCategory===s?'selected':''}>${s}</option>`).join('')}</select></label>
+      <label>Flat No. (optional)<input id="txnFlat" list="flatList" value="${t?esc(t.flatNo):''}"></label>
+      <datalist id="flatList">${sortedFlats().map(f=>`<option value="${f.flatNo}">`).join('')}</datalist>
+      <label>Payer / Payee<input id="txnPayer" value="${t?esc(t.payerPayee):''}"></label>
+      <label>Payment Mode<select id="txnMode">${MODES.map(m=>`<option ${t&&t.mode===m?'selected':''}>${m}</option>`).join('')}</select></label>
+      <label>Amount ₹<input type="number" step="0.01" id="txnAmount" value="${t?t.amount:''}" oninput="updateAddonPreview()"></label>
+      <label>Verified?<select id="txnVerified"><option value="yes" ${t&&t.verified?'selected':''}>Yes</option><option value="no" ${t&&!t.verified?'selected':''}>No</option></select></label>
+      <label>Remarks<input id="txnRemarks" value="${t?esc(t.remarks):''}"></label>
+    </div>
+    <div id="addonPreview" class="hint hidden"></div>
+    <div class="row" style="margin-top:10px;">
+      <button class="btn" onclick="saveTxn()">${t?'Save Changes':'Add Transaction'}</button>
+      ${t?`<button class="btn ghost" onclick="editingTxnId=null; render();">Cancel</button>`:''}
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="row" style="justify-content:space-between;">
+      <h3 style="margin:0;">All Transactions (${DB.transactions.length}) — running balance from opening ${toINR(DB.settings.openingBalance)}</h3>
+      <button class="btn secondary small no-print" onclick="exportCsv()">Export CSV</button>
+    </div>
+    <div class="table-wrap"><table>
+      <tr><th>Date</th><th>Ref/Cheque</th><th>Type</th><th>Category</th><th>Flat</th><th>Payer/Payee</th><th>Mode</th>
+        <th>Debit ₹</th><th>Credit ₹</th><th>Verified</th><th>Remarks</th><th class="no-print">Actions</th></tr>
+      ${rows || '<tr><td colspan="12" class="muted">No transactions yet.</td></tr>'}
+    </table></div>
+  </div>`;
+}
+function refreshCatOptions(){
+  const type = document.querySelector('input[name="txnType"]:checked').value;
+  const sel = document.getElementById('txnCategory');
+  const cats = type==='credit'?CREDIT_CATS:DEBIT_CATS;
+  sel.innerHTML = cats.map(c=>`<option>${c}</option>`).join('');
+  refreshSubcatVisibility();
+}
+function refreshSubcatVisibility(){
+  const cat = document.getElementById('txnCategory').value;
+  const wrap = document.getElementById('subcatWrap');
+  if(cat==='Other Income'){ wrap.classList.remove('hidden'); } else { wrap.classList.add('hidden'); }
+}
+function updateAddonPreview(){
+  const cat = document.getElementById('txnCategory')?.value;
+  const amt = parseFloat(document.getElementById('txnAmount')?.value);
+  const dateEl = document.getElementById('txnDate');
+  const box = document.getElementById('addonPreview');
+  if(!cat || isNaN(amt) || !dateEl.value){ box.classList.add('hidden'); return; }
+  const mk = monthKey(dateEl.value);
+  const type = document.querySelector('input[name="txnType"]:checked').value;
+  const existing = sumBy(txnsForMonth(mk), t=>t.type===type && t.category===cat && t.id!==editingTxnId);
+  box.classList.remove('hidden');
+  box.innerHTML = `Monthly addon: <b>${cat}</b> in <b>${monthLabel(mk)}</b> is currently ${toINR(existing)} — after this entry it becomes <b>${toINR(existing+amt)}</b>.`;
+}
+function startEditTxn(id){ editingTxnId=id; render(); setTimeout(()=>{refreshSubcatVisibility(); updateAddonPreview();},0); }
+function saveTxn(){
+  const type = document.querySelector('input[name="txnType"]:checked').value;
+  const date = document.getElementById('txnDate').value;
+  if(!date){ alert('Date is required'); return; }
+  const amount = parseFloat(document.getElementById('txnAmount').value);
+  if(isNaN(amount) || amount<=0){ alert('Enter a valid amount'); return; }
+  const data = {
+    date, valueDate: date, chequeNo: document.getElementById('txnCheque').value.trim(),
+    type, category: document.getElementById('txnCategory').value,
+    subCategory: document.getElementById('subcatWrap').classList.contains('hidden') ? '' : document.getElementById('txnSubcat').value,
+    flatNo: document.getElementById('txnFlat').value.trim(),
+    payerPayee: document.getElementById('txnPayer').value.trim(),
+    mode: document.getElementById('txnMode').value,
+    amount, verified: document.getElementById('txnVerified').value==='yes',
+    remarks: document.getElementById('txnRemarks').value.trim(),
+  };
+  if(editingTxnId){
+    const tx = DB.transactions.find(x=>x.id===editingTxnId);
+    Object.assign(tx, data);
+    editingTxnId=null;
+  } else {
+    DB.transactions.push({id:uid('T',txnSeq++), isAggregate:false, ...data});
+  }
+  render();
+}
+function deleteTxn(id){
+  if(!confirm('Delete this transaction?')) return;
+  DB.transactions = DB.transactions.filter(t=>t.id!==id);
+  render();
+}
+function exportCsv(){
+  const header = ['Date','Cheque/Ref','Type','Category','SubCategory','Flat','Payer/Payee','Mode','Debit','Credit','Verified','Remarks'];
+  const lines = [header.join(',')];
+  [...DB.transactions].sort((a,b)=>a.date.localeCompare(b.date)).forEach(t=>{
+    const row = [isoToDisplay(t.date), t.chequeNo, t.type, t.category, t.subCategory, t.flatNo, t.payerPayee, t.mode,
+      t.type==='debit'?t.amount:'', t.type==='credit'?t.amount:'', t.verified?'Yes':'No', t.remarks];
+    lines.push(row.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(','));
+  });
+  downloadFile('hmr-transactions.csv', lines.join('\n'), 'text/csv');
+}
+
+/* ============================= DUES / NON-PAYERS ============================= */
+function renderDues(){
+  if(!selectedMonth) selectedMonth = allMonths().slice(-1)[0];
+  const mTx = txnsForMonth(selectedMonth);
+  const fee = Number(DB.settings.standardMaintenanceFee||0);
+  const tankerFee = Number(DB.settings.standardWaterTankerFee||0);
+
+  const maintDues = sortedFlats().filter(f=>{
+    const paid = sumBy(mTx.filter(t=>t.flatNo===f.flatNo), t=>t.type==='credit'&&t.category==='Maintenance Fee');
+    return paid < fee;
+  });
+  const tankerDues = tankerFee>0 ? sortedFlats().filter(f=>{
+    const paid = sumBy(mTx.filter(t=>t.flatNo===f.flatNo), t=>t.type==='credit'&&t.category==='Water Tanker');
+    return paid < tankerFee;
+  }) : [];
+
+  const maintRows = maintDues.map(f=>{
+    const paid = sumBy(mTx.filter(t=>t.flatNo===f.flatNo), t=>t.type==='credit'&&t.category==='Maintenance Fee');
+    return `<tr><td>${f.flatNo}</td><td>${esc(f.ownerName)}</td><td>${esc(f.tenantName)}</td><td>${f.occupancy}</td>
+      <td>${esc(f.ownerContact)||esc(f.tenantContact)}</td><td>${toINR(paid)}</td><td>${toINR(Math.max(fee-paid,0))}</td></tr>`;
+  }).join('');
+  const tankerRows = tankerDues.map(f=>{
+    const paid = sumBy(mTx.filter(t=>t.flatNo===f.flatNo), t=>t.type==='credit'&&t.category==='Water Tanker');
+    return `<tr><td>${f.flatNo}</td><td>${esc(f.ownerName)}</td><td>${esc(f.tenantName)}</td><td>${f.occupancy}</td>
+      <td>${esc(f.ownerContact)||esc(f.tenantContact)}</td><td>${toINR(paid)}</td><td>${toINR(Math.max(tankerFee-paid,0))}</td></tr>`;
+  }).join('');
+
+  const totalMaintDue = maintDues.reduce((s,f)=>{
+    const paid = sumBy(mTx.filter(t=>t.flatNo===f.flatNo), t=>t.type==='credit'&&t.category==='Maintenance Fee');
+    return s+Math.max(fee-paid,0);
+  },0);
+
+  return `
+  ${monthSelectorHtml()}
+  <div class="hint">Standard maintenance fee: ${toINR(fee)}. Standard water tanker fee: ${toINR(tankerFee)} ${tankerFee<=0?'(set this in Settings to enable tanker dues tracking)':''}.</div>
+
+  <div class="panel">
+    <h3>Maintenance Fee — Not Paid / Partially Paid (${maintDues.length} flats) — ${monthLabel(selectedMonth)}</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Flat</th><th>Owner</th><th>Tenant</th><th>Occupancy</th><th>Contact</th><th>Paid ₹</th><th>Due ₹</th></tr>
+      ${maintRows || '<tr><td colspan="7" class="muted">All flats have paid maintenance for this month.</td></tr>'}
+      ${maintDues.length?`<tr style="font-weight:600;background:#fafafa;"><td colspan="6">Total Maintenance Dues</td><td>${toINR(totalMaintDue)}</td></tr>`:''}
+    </table></div>
+  </div>
+
+  <div class="panel">
+    <h3>Water Tanker Charges — Not Paid (${tankerDues.length} flats) — ${monthLabel(selectedMonth)}</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Flat</th><th>Owner</th><th>Tenant</th><th>Occupancy</th><th>Contact</th><th>Paid ₹</th><th>Due ₹</th></tr>
+      ${tankerRows || `<tr><td colspan="7" class="muted">${tankerFee>0?'All flats have paid water tanker charges for this month.':'No water tanker fee set for this month.'}</td></tr>`}
+    </table></div>
+  </div>`;
+}
+
+/* ============================= SINKING FUND ============================= */
+function renderSinking(){
+  const sinkTxns = DB.transactions.filter(t=>t.type==='credit' && t.category==='Sinking Fund');
+  const paidFlats = sortedFlats().map(f=>{
+    const paid = sumBy(sinkTxns.filter(t=>t.flatNo===f.flatNo),()=>true);
+    const last = sinkTxns.filter(t=>t.flatNo===f.flatNo).sort((a,b)=>b.date.localeCompare(a.date))[0];
+    return {f, paid, lastDate: last?isoToDisplay(last.date):'—'};
+  });
+  const paid = paidFlats.filter(x=>x.paid>0);
+  const unpaid = paidFlats.filter(x=>x.paid<=0);
+  const total = sumBy(sinkTxns, ()=>true);
+
+  return `
+  <div class="cards">
+    <div class="card purple"><div class="label">Total Sinking Fund Collected (all-time)</div><div class="value">${toINR(total)}</div></div>
+    <div class="card green"><div class="label">Flats Paid (at least once)</div><div class="value">${paid.length}</div></div>
+    <div class="card red"><div class="label">Flats Never Paid</div><div class="value">${unpaid.length}</div></div>
+  </div>
+
+  <div class="panel">
+    <h3>Sinking Fund — Paid (${paid.length})</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Flat</th><th>Owner</th><th>Total Paid ₹</th><th>Last Payment</th></tr>
+      ${paid.map(x=>`<tr><td>${x.f.flatNo}</td><td>${esc(x.f.ownerName)}</td><td>${toINR(x.paid)}</td><td>${x.lastDate}</td></tr>`).join('') || '<tr><td colspan="4" class="muted">None yet.</td></tr>'}
+      <tr style="font-weight:600;background:#fafafa;"><td colspan="2">TOTAL</td><td>${toINR(total)}</td><td></td></tr>
+    </table></div>
+  </div>
+
+  <div class="panel">
+    <h3>Sinking Fund — Not Paid (${unpaid.length})</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Flat</th><th>Owner</th><th>Tenant</th><th>Occupancy</th></tr>
+      ${unpaid.map(x=>`<tr><td>${x.f.flatNo}</td><td>${esc(x.f.ownerName)}</td><td>${esc(x.f.tenantName)}</td><td>${x.f.occupancy}</td></tr>`).join('') || '<tr><td colspan="4" class="muted">Everyone has paid.</td></tr>'}
+    </table></div>
+  </div>`;
+}
+
+/* ============================= INCOME ============================= */
+function renderIncome(){
+  const months = allMonths();
+  const bankCats = ['Maintenance Fee','Water Tanker','Sinking Fund','Advance Payment'];
+  const bankRows = bankCats.map(cat=>{
+    let cum = 0;
+    const cells = months.map(m=>{ const v = sumBy(txnsForMonth(m), t=>t.type==='credit'&&t.category===cat); cum+=v; return `<td>${v?toINR(v):'—'}</td>`; }).join('');
+    return `<tr><td><b>${cat}</b></td>${cells}<td style="font-weight:600;">${toINR(cum)}</td></tr>`;
+  }).join('');
+  const bankMonthTotals = months.map(m=>`<td>${toINR(sumBy(txnsForMonth(m), t=>t.type==='credit'&&bankCats.includes(t.category)))}</td>`).join('');
+  const bankGrandTotal = sumBy(DB.transactions, t=>t.type==='credit'&&bankCats.includes(t.category));
+
+  const otherRows = OTHER_INCOME_SUBCATS.map(sub=>{
+    let cum=0;
+    const cells = months.map(m=>{ const v = sumBy(txnsForMonth(m), t=>t.type==='credit'&&t.category==='Other Income'&&t.subCategory===sub); cum+=v; return `<td>${v?toINR(v):'—'}</td>`; }).join('');
+    return `<tr><td><b>${sub}</b></td>${cells}<td style="font-weight:600;">${toINR(cum)}</td></tr>`;
+  }).join('');
+  const otherGrandTotal = sumBy(DB.transactions, t=>t.type==='credit'&&t.category==='Other Income');
+
+  const totalReceived = sumBy(DB.transactions, t=>t.type==='credit');
+
+  return `
+  <div class="cards">
+    <div class="card green"><div class="label">Total Received — All Sources (all-time)</div><div class="value">${toINR(totalReceived)}</div></div>
+    <div class="card"><div class="label">Bank / Member Income (all-time)</div><div class="value">${toINR(bankGrandTotal)}</div></div>
+    <div class="card"><div class="label">Other Indirect Income (all-time)</div><div class="value">${toINR(otherGrandTotal)}</div></div>
+  </div>
+
+  <div class="panel">
+    <h3>Bank / Member Income — Month-wise &amp; Cumulative</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Category</th>${months.map(m=>`<th>${monthLabel(m)}</th>`).join('')}<th>Total</th></tr>
+      ${bankRows}
+      <tr style="font-weight:600;background:#fafafa;"><td>Month Total</td>${bankMonthTotals}<td>${toINR(bankGrandTotal)}</td></tr>
+    </table></div>
+  </div>
+
+  <div class="panel">
+    <h3>Other Indirect Income — Month-wise &amp; Cumulative</h3>
+    <p class="muted">e.g. ACT using rooftop/power for internet infrastructure (~₹105/month), advertising board digital display income (paid half-yearly), bank interest, etc.</p>
+    <div class="table-wrap"><table>
+      <tr><th>Source</th>${months.map(m=>`<th>${monthLabel(m)}</th>`).join('')}<th>Total</th></tr>
+      ${otherRows}
+    </table></div>
+  </div>`;
+}
+
+/* ============================= EXPENSES ============================= */
+function renderExpenses(){
+  const months = allMonths();
+  const nonCapitalCats = DEBIT_CATS.filter(c=>c!=='Capital Items');
+  const rows = nonCapitalCats.map(cat=>{
+    let cum=0;
+    const vals = months.map(m=>{ const v=sumBy(txnsForMonth(m), t=>t.type==='debit'&&t.category===cat); cum+=v; return v; });
+    const cells = vals.map(v=>`<td>${v?toINR(v):'—'}</td>`).join('');
+    return {cat, vals, cum, html:`<tr><td><b>${cat}</b></td>${cells}<td style="font-weight:600;">${toINR(cum)}</td></tr>`};
+  });
+  const monthTotals = months.map(m=>sumBy(txnsForMonth(m), t=>t.type==='debit'&&t.category!=='Capital Items'));
+  const grandTotal = monthTotals.reduce((a,b)=>a+b,0);
+
+  const lastIdx = months.length-1;
+  const addonRows = nonCapitalCats.map(cat=>{
+    const row = rows.find(r=>r.cat===cat);
+    const thisM = row.vals[lastIdx]||0;
+    const prevM = lastIdx>0 ? (row.vals[lastIdx-1]||0) : 0;
+    const delta = thisM-prevM;
+    const cls = delta>0?'delta-up':delta<0?'delta-down':'delta-flat';
+    const arrow = delta>0?'▲':delta<0?'▼':'—';
+    return `<tr><td>${cat}</td><td>${toINR(prevM)}</td><td>${toINR(thisM)}</td><td class="${cls}">${arrow} ${toINR(Math.abs(delta))}</td></tr>`;
+  }).join('');
+
+  const maxVal = Math.max(1,...rows.map(r=>r.cum));
+
+  return `
+  <div class="cards">
+    <div class="card red"><div class="label">Total Expenses (all-time, excl. capital)</div><div class="value">${toINR(grandTotal)}</div></div>
+    <div class="card"><div class="label">Latest Month (${months.length?monthLabel(months[lastIdx]):'—'})</div><div class="value">${toINR(monthTotals[lastIdx]||0)}</div></div>
+  </div>
+
+  <div class="panel">
+    <h3>Expenses by Category — Month-wise &amp; Cumulative</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Category</th>${months.map(m=>`<th>${monthLabel(m)}</th>`).join('')}<th>Total</th></tr>
+      ${rows.map(r=>r.html).join('')}
+      <tr style="font-weight:600;background:#fafafa;"><td>Month Total</td>${monthTotals.map(v=>`<td>${toINR(v)}</td>`).join('')}<td>${toINR(grandTotal)}</td></tr>
+    </table></div>
+  </div>
+
+  <div class="panel">
+    <h3>Cumulative Spend by Category (all-time)</h3>
+    ${rows.map(r=>`<div class="bar-row"><div class="bar-label">${r.cat}</div><div class="bar-track"><div class="bar-fill" style="width:${(r.cum/maxVal*100).toFixed(1)}%"></div></div><div class="bar-val">${toINR(r.cum)}</div></div>`).join('')}
+  </div>
+
+  <div class="panel">
+    <h3>Monthly Addon — ${months.length?monthLabel(months[lastIdx]):'—'} vs. Previous Month</h3>
+    <p class="muted">Shows how much each category's spend went up or down compared to the prior month, so new entries are easy to track as you keep adding them.</p>
+    <div class="table-wrap"><table>
+      <tr><th>Category</th><th>Previous Month</th><th>This Month</th><th>Change</th></tr>
+      ${addonRows}
+    </table></div>
+  </div>`;
+}
+
+/* ============================= CAPITAL ITEMS ============================= */
+function renderCapital(){
+  const items = DB.transactions.filter(t=>t.type==='debit' && t.category==='Capital Items').sort((a,b)=>b.date.localeCompare(a.date));
+  const total = sumBy(items, ()=>true);
+  const rows = items.map(t=>`<tr><td>${isoToDisplay(t.date)}</td><td>${esc(t.payerPayee)}</td><td>${esc(t.remarks)}</td><td>${toINR(t.amount)}</td>
+    <td class="no-print"><button class="btn small ghost" onclick="editingTxnId='${t.id}'; switchTab('transactions');">Edit</button></td></tr>`).join('');
+  return `
+  <div class="cards"><div class="card red"><div class="label">Total Capital Expenditure (all-time)</div><div class="value">${toINR(total)}</div></div>
+  <div class="card"><div class="label">No. of Capital Items</div><div class="value">${items.length}</div></div></div>
+  <div class="panel">
+    <h3>Capital Items (one-off / big-ticket purchases: pumps, generators, structural work, etc.)</h3>
+    <p class="muted">Add these from the Transactions tab using category "Capital Items" — they'll appear here automatically, separate from routine monthly expenses.</p>
+    <div class="table-wrap"><table>
+      <tr><th>Date</th><th>Vendor/Payee</th><th>Description</th><th>Amount ₹</th><th class="no-print">Actions</th></tr>
+      ${rows || '<tr><td colspan="5" class="muted">No capital items recorded yet.</td></tr>'}
+      <tr style="font-weight:600;background:#fafafa;"><td colspan="3">TOTAL</td><td>${toINR(total)}</td><td></td></tr>
+    </table></div>
+  </div>`;
+}
+
+/* ============================= SETTINGS ============================= */
+function renderSettings(){
+  const s = DB.settings;
+  return `
+  <div class="panel">
+    <h3>Association &amp; Bank Details</h3>
+    <div class="form-grid">
+      <label>Association Name<input id="setAssoc" value="${esc(s.assocName)}"></label>
+      <label>Bank Name<input id="setBank" value="${esc(s.bankName)}"></label>
+      <label>Account No.<input id="setAcct" value="${esc(s.bankAccount)}"></label>
+      <label>Branch<input id="setBranch" value="${esc(s.branch)}"></label>
+      <label>IFSC<input id="setIfsc" value="${esc(s.ifsc)}"></label>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Opening Balance</h3>
+    <div class="form-grid">
+      <label>Opening Balance ₹<input type="number" step="0.01" id="setOB" value="${s.openingBalance}"></label>
+      <label>As Of Date<input type="date" id="setOBDate" value="${s.openingDate}"></label>
+    </div>
+  </div>
+  <div class="panel">
+    <h3>Standard Fees (used for Dues &amp; Monthly View status)</h3>
+    <div class="form-grid">
+      <label>Standard Maintenance Fee ₹/flat/month<input type="number" step="0.01" id="setFee" value="${s.standardMaintenanceFee}"></label>
+      <label>Standard Water Tanker Fee ₹/flat/month<input type="number" step="0.01" id="setTankerFee" value="${s.standardWaterTankerFee}"></label>
+    </div>
+  </div>
+  <div class="row"><button class="btn" onclick="saveSettings()">Save Settings</button></div>
+
+  <div class="panel">
+    <h3>Backup</h3>
+    <p class="muted">Nothing here auto-saves between browser sessions. Export a backup file regularly and import it next time you open this page.</p>
+    <div class="row">
+      <button class="btn" onclick="exportBackup()">Export Backup (JSON)</button>
+      <button class="btn secondary" onclick="document.getElementById('importFile').click()">Import Backup (JSON)</button>
+      <button class="btn ghost" onclick="if(confirm('Reset all data back to the original sample? This cannot be undone unless you have a backup.')){DB={flats:[],transactions:[],settings:{},reconciliation:{}};flatSeq=1;txnSeq=1;loadInitialData();render();}">Reset to Sample Data</button>
+    </div>
+  </div>`;
+}
+function saveSettings(){
+  DB.settings.assocName = document.getElementById('setAssoc').value;
+  DB.settings.bankName = document.getElementById('setBank').value;
+  DB.settings.bankAccount = document.getElementById('setAcct').value;
+  DB.settings.branch = document.getElementById('setBranch').value;
+  DB.settings.ifsc = document.getElementById('setIfsc').value;
+  DB.settings.openingBalance = parseFloat(document.getElementById('setOB').value)||0;
+  DB.settings.openingDate = document.getElementById('setOBDate').value;
+  DB.settings.standardMaintenanceFee = parseFloat(document.getElementById('setFee').value)||0;
+  DB.settings.standardWaterTankerFee = parseFloat(document.getElementById('setTankerFee').value)||0;
+  render();
+  alert('Settings saved.');
+}
+
+/* ============================= BACKUP / RESTORE ============================= */
+function downloadFile(name, content, mime){
+  const blob = new Blob([content], {type:mime});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = name; document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+function exportBackup(){
+  const payload = { DB, flatSeq, txnSeq, savedAt: new Date().toISOString() };
+  const today = new Date().toISOString().slice(0,10);
+  downloadFile(`hmr-purple-elites-backup-${today}.json`, JSON.stringify(payload,null,2), 'application/json');
+}
+function importBackup(evt){
+  const file = evt.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e=>{
+    try{
+      const payload = JSON.parse(e.target.result);
+      if(!payload.DB) throw new Error('Invalid backup file');
+      DB = payload.DB; flatSeq = payload.flatSeq||1; txnSeq = payload.txnSeq||1;
+      DB.reconciliation = DB.reconciliation || {};
+      selectedMonth = allMonths().slice(-1)[0] || null;
+      currentTab='dashboard';
+      render();
+      alert('Backup imported successfully.');
+    } catch(err){
+      alert('Could not read this file as a valid backup: '+err.message);
+    }
+  };
+  reader.readAsText(file);
+  evt.target.value = '';
+}
+
+/* ============================= CLOUD SYNC (Supabase) ============================= */
+// Fill these in from your Supabase project: Settings -> API.
+// This is the SAME project you created for LawShare — this tool uses
+// its own separate tables (hmr_admins, hmr_state), so it doesn't
+// touch anything from that app.
+const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR-ANON-KEY';
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentUser = null;
+let cloudSyncTimer = null;
+let cloudSyncInFlight = false;
+let cloudSyncQueued = false;
+
+function setCloudStatus(text, cls){
+  const el = document.getElementById('cloudStatus');
+  if(!el) return;
+  el.textContent = text;
+  el.className = 'cloud-status ' + (cls||'');
+}
+
+function queueCloudSync(){
+  if(!currentUser) return;
+  clearTimeout(cloudSyncTimer);
+  setCloudStatus('Saving…','saving');
+  cloudSyncTimer = setTimeout(syncToCloud, 900);
+}
+
+async function syncToCloud(){
+  if(!currentUser) return;
+  if(cloudSyncInFlight){ cloudSyncQueued = true; return; }
+  cloudSyncInFlight = true;
+  const { error } = await sb.from('hmr_state').upsert({
+    id: 'default',
+    data: { DB, flatSeq, txnSeq },
+    updated_at: new Date().toISOString(),
+    updated_by: currentUser.email,
+  });
+  cloudSyncInFlight = false;
+  if(error){ setCloudStatus('Save failed — check connection', 'error'); console.error(error); }
+  else { setCloudStatus('Saved to cloud ✓', 'ok'); }
+  if(cloudSyncQueued){ cloudSyncQueued = false; syncToCloud(); }
+}
+
+async function loadFromCloud(){
+  const { data, error } = await sb.from('hmr_state').select('data').eq('id','default').maybeSingle();
+  if(error){ setCloudStatus('Could not load cloud data', 'error'); console.error(error); return false; }
+  if(data && data.data && data.data.DB){
+    DB = data.data.DB;
+    DB.reconciliation = DB.reconciliation || {};
+    flatSeq = data.data.flatSeq || 1;
+    txnSeq = data.data.txnSeq || 1;
+    setCloudStatus('Loaded from cloud', 'ok');
+    return true;
+  }
+  return false;
+}
+
+/* ============================= AUTH ============================= */
+function showAuthGate(msg){
+  document.getElementById('appShell').classList.add('hidden');
+  document.getElementById('authGate').classList.remove('hidden');
+  document.getElementById('authError').textContent = msg || '';
+}
+function showAppShell(){
+  document.getElementById('authGate').classList.add('hidden');
+  document.getElementById('appShell').classList.remove('hidden');
+}
+
+async function handleSignIn(){
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  document.getElementById('authError').textContent = '';
+  const btn = document.getElementById('authSubmitBtn');
+  btn.disabled = true; btn.textContent = 'Signing in…';
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  btn.disabled = false; btn.textContent = 'Sign in';
+  if(error){ document.getElementById('authError').textContent = error.message; return; }
+  await onSignedIn(data.user);
+}
+
+async function handleSignOut(){
+  await sb.auth.signOut();
+  currentUser = null;
+  showAuthGate();
+}
+
+async function onSignedIn(user){
+  currentUser = user;
+  document.getElementById('userEmailLabel').textContent = user.email;
+  showAppShell();
+  const hadCloudData = await loadFromCloud();
+  if(!hadCloudData){
+    // First sign-in with nothing saved yet: start from the bundled
+    // sample data and push it up so there's a baseline in the cloud.
+    loadInitialData();
+    render();
+    syncToCloud();
+    return;
+  }
+  selectedMonth = allMonths().slice(-1)[0] || null;
+  render();
+}
+
+/* ============================= BOOT ============================= */
+async function boot(){
+  const { data: { session } } = await sb.auth.getSession();
+  if(session && session.user){
+    await onSignedIn(session.user);
+  } else {
+    showAuthGate();
+  }
+}
+boot();
+</script>
+</body>
+</html>
